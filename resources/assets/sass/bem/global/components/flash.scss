@@ -1,0 +1,19 @@
+.Flash {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+    position: fixed;
+    color: color(alpha);
+    letter-spacing: 1px;
+    padding: size(8) size(0);
+    text-transform: uppercase;
+    transform: translateY(100%);
+    background-color: color(india);
+    transition: transform .5s ease-in-out;
+}
+
+.Flash--active {
+    transform: translateY(0%);
+}

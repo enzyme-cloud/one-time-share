@@ -1,0 +1,10 @@
+.Container {
+    height: 100%;
+    display: flex;
+    padding: size(16) size(0);
+}
+
+.Container__inner {
+    width: 100%;
+    margin: auto size(0);
+}

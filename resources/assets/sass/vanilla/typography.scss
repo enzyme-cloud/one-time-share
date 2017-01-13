@@ -1,0 +1,25 @@
+p {
+    @include clear-box-model();
+
+    line-height: 1.5;
+
+    & + & {
+        margin-top: size(2);
+    }
+}
+
+small {
+    display: block;
+    font-size: 12px;
+    color: color(delta);
+    line-height: 1.5;
+
+    a {
+        color: color(delta);
+        text-decoration: underline;
+    }
+
+    & + & {
+        margin-top: size(2);
+    }
+}

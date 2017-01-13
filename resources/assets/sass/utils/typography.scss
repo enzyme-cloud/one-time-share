@@ -1,0 +1,29 @@
+.util-label {
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+    border-radius: 3px;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    margin-bottom: size(3);
+    padding: size(1) size(2);
+    text-transform: uppercase;
+    background-color: color(echo);
+
+    a {
+        text-transform: none;
+    }
+
+    &:after {
+        @include pseudo(inline-block);
+
+        width: 0;
+        left: 50%;
+        height: 0;
+        border-style: solid;
+        bottom: size(2) * -1;
+        margin-left: size(2) * -1;
+        border-width: size(2) size(2) size(0) size(2);
+        border-color: color(echo) transparent transparent transparent;
+    }
+}

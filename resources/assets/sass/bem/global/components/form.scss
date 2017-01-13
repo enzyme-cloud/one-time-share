@@ -1,0 +1,54 @@
+%shared-form-element-attributes {
+    border-radius: 5px;
+    border: 1px solid color(echo);
+    transition: box-shadow .3s ease, border .3s ease;
+
+    &:focus, &:hover {
+        outline: 0;
+        border: 1px solid color(delta);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.Form {
+    //
+}
+
+.Form__textarea {
+    @extend %shared-form-element-attributes;
+
+    width: 100%;
+    height: size(32);
+    padding: size(4);
+    max-width: size(152);
+
+    @include viewport-min('sm') {
+        height: size(48);
+    }
+}
+
+.Form__input {
+    @extend %shared-form-element-attributes;
+
+    width: 100%;
+    padding: size(4);
+    text-align: center;
+}
+
+.Form__button {
+    @extend %shared-form-element-attributes;
+
+    cursor: pointer;
+    padding: size(4) size(8);
+    background-color: color(foxtrot);
+}
+
+.Form__button--disabled {
+    cursor: default;
+
+    &:focus, &:hover {
+        outline: 0;
+        box-shadow: none;
+        border: 1px solid color(echo);
+    }
+}

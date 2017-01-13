@@ -1,0 +1,8 @@
+// Generic styling for all headings.
+// Define specific selector based configurations in config/headings.scss.
+@include headings {
+    @include clear-box-model();
+
+    font-weight: 900;
+    text-transform: uppercase;
+}

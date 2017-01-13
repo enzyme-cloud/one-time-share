@@ -1,0 +1,16 @@
+$colors: (
+    alpha: #FFFFFF,
+    bravo: #000000,
+    charlie: #FAFAFA,
+    delta: #9E9E9E,
+    echo: #E0E0E0,
+    foxtrot: #EEEEEE,
+    golf: #FFCDD2,
+    hotel: #CFD8DC,
+    india: #F44336,
+    juliet: #1565C0,
+);
+
+@function color($key) {
+    @return map-get($colors, $key);
+}

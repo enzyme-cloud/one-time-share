@@ -1,0 +1,18 @@
+.Spinner {
+    width: size(4);
+    height: size(4);
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: bottom;
+    background-color: #333;
+    animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@keyframes sk-scaleout {
+    0% {
+        transform: scale(0);
+    } 100% {
+        transform: scale(1.0);
+        opacity: 0;
+    }
+}

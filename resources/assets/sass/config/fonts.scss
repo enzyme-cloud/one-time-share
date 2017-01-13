@@ -1,0 +1,7 @@
+$fonts: (
+    alpha: "'Roboto', sans-serif",
+);
+
+@function font($key) {
+    @return unquote(map-get($fonts, $key));
+}
