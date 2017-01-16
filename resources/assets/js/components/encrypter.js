@@ -11,6 +11,7 @@ export default ({ Q, request }) => {
   const ENCRYPTION_SETTINGS = {
     iter: 20000, // Iterations.
     ks: 256,     // Key size.
+    mode: "gcm"  // Cipher mode.
   }
 
   const PLAIN_DATA_FIELD         = Q.first('#js-plain-data-field')
