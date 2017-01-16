@@ -10,6 +10,6 @@ elixir(mix => {
     ])
     .copy('resources/assets/images', 'public/images')
     .browserSync({
-      proxy: 'ots.dev',
+      proxy: 'one-time-share.dev',
     })
 })
