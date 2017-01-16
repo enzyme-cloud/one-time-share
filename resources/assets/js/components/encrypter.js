@@ -17,10 +17,10 @@ export default ({ Q, request }) => {
   const ENCRYPT_DATA_BTN         = Q.first('#js-encrypt-data-btn')
   const ENCRYPT_DATA_BTN_VALUE   = Q.html(ENCRYPT_DATA_BTN)
   const ENCRYPT_FORM             = Q.first('#js-encrypt-form')
-  const ENCRYPTED_RESULTS_FORM   = Q.find('#js-encrypted-results-form')
-  const ENCRYPTED_DATA_URL       = Q.find('#js-encrypted-data-url')
-  const ENCRYPTED_DATA_URL_SHORT = Q.find('#js-encrypted-data-url-short')
-  const ENCRYPTED_DATA_PASSWORD  = Q.find('#js-encrypted-data-password')
+  const ENCRYPTED_RESULTS_FORM   = Q.first('#js-encrypted-results-form')
+  const ENCRYPTED_DATA_URL       = Q.first('#js-encrypted-data-url')
+  const ENCRYPTED_DATA_URL_SHORT = Q.first('#js-encrypted-data-url-short')
+  const ENCRYPTED_DATA_PASSWORD  = Q.first('#js-encrypted-data-password')
   const PRE_SIGNED_URL_BTN_BOX   = Q.first('#js-pre-signed-url-btn-box')
   const PRE_SIGNED_URL_BTN       = Q.first('#js-pre-signed-url-btn')
   const PRE_SIGNED_URL_BOX       = Q.first('#js-pre-signed-url-box')
@@ -28,20 +28,6 @@ export default ({ Q, request }) => {
   const SPINNER                  = Q.make('div')
 
   let in_progress = false
-
-  /*
-   |----------------------------------------------------------------------------
-   | fillInPassword
-   |----------------------------------------------------------------------------
-   | Fills the PASSWORD_EL element with the given `password`.
-  */
-  let fillInPassword = function fillInPassword(password) {
-    const PASSWORD_EL = Q.make('span')
-
-    Q.addClass(PASSWORD_EL, 'Password')
-    Q.html(PASSWORD_EL, password)
-    Q.append(ENCRYPTED_DATA_PASSWORD, PASSWORD_EL)
-  }
 
   /*
    |----------------------------------------------------------------------------
@@ -79,15 +65,11 @@ export default ({ Q, request }) => {
       .then(res => {
         const RESPONSE = JSON.parse(res.text)
 
-        fillInPassword(PASSWORD)
-
         // Fill in the various links.
-        Q.html(ENCRYPTED_DATA_URL, RESPONSE.url)
-        Q.attr(ENCRYPTED_DATA_URL, 'href', RESPONSE.url)
-        Q.html(ENCRYPTED_DATA_URL_SHORT, RESPONSE.short)
-        Q.attr(ENCRYPTED_DATA_URL_SHORT, 'href', RESPONSE.short)
-        Q.html(PRE_SIGNED_URL, RESPONSE.url + '#' + btoa(PASSWORD))
-        Q.attr(PRE_SIGNED_URL, 'href', RESPONSE.url + '#' + btoa(PASSWORD))
+        Q.val(ENCRYPTED_DATA_URL, RESPONSE.url)
+        Q.val(ENCRYPTED_DATA_URL_SHORT, RESPONSE.short)
+        Q.val(PRE_SIGNED_URL, RESPONSE.url + '#' + btoa(PASSWORD))
+        Q.val(ENCRYPTED_DATA_PASSWORD, PASSWORD)
 
         Q.hide(ENCRYPT_FORM)
         Q.show(ENCRYPTED_RESULTS_FORM)
