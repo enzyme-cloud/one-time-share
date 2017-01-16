@@ -1,6 +1,3 @@
-import system from './bootstrap.js'
-import components from './components/bootstrap.js'
+import components from './components/index.js';
 
-system.Q.documentReady(() => {
-  components(system)
-})
+components();

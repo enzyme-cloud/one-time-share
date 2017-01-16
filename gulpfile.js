@@ -1,4 +1,4 @@
-const elixir = require('laravel-elixir')
+const elixir = require('laravel-elixir');
 
 elixir(mix => {
   mix
@@ -11,5 +11,5 @@ elixir(mix => {
     .copy('resources/assets/images', 'public/images')
     .browserSync({
       proxy: 'one-time-share.dev',
-    })
-})
+    });
+});

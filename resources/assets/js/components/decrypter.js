@@ -1,28 +1,34 @@
-import flash from '../lib/flash.js'
+import Q from 'qoob';
+import request from 'superagent';
+import flash from '../lib/flash.js';
 
-export default ({ Q, request }) => {
+/**
+ * Create and start the decrypter component.
+ */
+const _decrypter = function _decrypter() {
+  const already_destroyed = Q.head(Q.val(Q.first('#js-secret-destroyed'))) === 'yes';
+
   // Let's jump out early if this secret has already been destroyed.
-  const ALREADY_DESTROYED = Q.head(Q.val(Q.first('#js-secret-destroyed'))) === 'yes'
-  if (ALREADY_DESTROYED) {
+  if (already_destroyed) {
     return;
   }
 
-  const DECRYPT_FORM       = Q.first('#js-decrypt-form')
-  const DECRYPTED_DATA_BOX = Q.first('#js-decrypted-data-box')
-  const DECRYPTED_RESULTS  = Q.first('#js-decrypted-results')
-  const PASSWORD_EL        = Q.first('#js-password')
-  const DECRYPT_BTN_EL     = Q.first('#js-decrypt-data-btn')
-  const DECRYPT_BTN_VALUE  = Q.html(DECRYPT_BTN_EL)
-  const TOKEN              = Q.head(Q.val(Q.first('#js-secret-token')))
-  const FETCH_CODE         = Q.head(Q.val(Q.first('#js-fetch-code')))
-  const SPINNER_EL         = Q.make('div')
+  const decrypt_form       = Q.first('#js-decrypt-form');
+  const decrypted_data_box = Q.first('#js-decrypted-data-box');
+  const decrypted_results  = Q.first('#js-decrypted-results');
+  const password_el        = Q.first('#js-password');
+  const decrypt_btn_el     = Q.first('#js-decrypt-data-btn');
+  const decrypt_btn_value  = Q.html(decrypt_btn_el);
+  const token              = Q.head(Q.val(Q.first('#js-secret-token')));
+  const fetch_code         = Q.head(Q.val(Q.first('#js-fetch-code')));
+  const spinner_el         = Q.make('div');
 
   // Is the URL pre-signed?
-  const URL_HASH = window.location.hash
-  const PASSWORD_PRE_SIGNED = URL_HASH.length > 0
+  const url_hash = window.location.hash;
+  const password_pre_signed = url_hash.length > 0;
 
-  let in_progress = false
-  let cached_encrypted_data = undefined
+  let in_progress = false;
+  let cached_encrypted_data = undefined;
 
   /*
    |----------------------------------------------------------------------------
@@ -31,82 +37,82 @@ export default ({ Q, request }) => {
    | Alerts the user to a failure during the decryption process.
   */
   let showFailure = function showFailure() {
-    Q.removeClass(DECRYPT_BTN_EL, 'Form__button--disabled')
-    Q.html(DECRYPT_BTN_EL, DECRYPT_BTN_VALUE)
-    Q.removeAttr(DECRYPT_BTN_EL, 'disabled')
+    Q.removeClass(decrypt_btn_el, 'Form__button--disabled');
+    Q.html(decrypt_btn_el, decrypt_btn_value);
+    Q.removeAttr(decrypt_btn_el, 'disabled');
 
-    flash('Decryption failed, please try again.')
+    flash('Decryption failed, please try again.');
 
-    in_progress = false
-  }
+    in_progress = false;
+  };
 
   /*
    |----------------------------------------------------------------------------
    | attemptDecryption
    |----------------------------------------------------------------------------
    | Given the `password` and `encrypted_data`, attempts to decrypt the payload.
-   | Assuming no exceptions are thrown, places the results in DECRYPTED_RESULTS
+   | Assuming no exceptions are thrown, places the results in decrypted_results
    | and shows the results.
   */
   let attemptDecryption = function attemptDecryption(password, encrypted_data) {
     const DATA = sjcl
       .decrypt(password, encrypted_data)
-      .replace(/(?:\r\n|\r|\n)/g, '<br />')
+      .replace(/(?:\r\n|\r|\n)/g, '<br />');
 
-    Q.html(DECRYPTED_RESULTS, DATA)
-    Q.hide(DECRYPT_FORM)
-    Q.show(DECRYPTED_DATA_BOX)
-  }
+    Q.html(decrypted_results, DATA);
+    Q.hide(decrypt_form);
+    Q.show(decrypted_data_box);
+  };
 
   /*
    |----------------------------------------------------------------------------
    | startDecrypt
    |----------------------------------------------------------------------------
    | Requests the server for the encrypted payload and attempts to decrypt
-   | the payload using the value found in the PASSWORD_EL element. If a
+   | the payload using the value found in the password_el element. If a
    | server request has already been made once before, it will use the
    | cached encrypted data instead.
   */
   let startDecrypt = function startDecrypt() {
     if (in_progress) {
-      return
+      return;
     } else {
-      in_progress = true
+      in_progress = true;
     }
 
-    const PASSWORD = Q.head(Q.val(PASSWORD_EL))
+    const password = Q.head(Q.val(password_el));
 
-    Q.addClass(SPINNER_EL, 'Spinner')
-    Q.addClass(DECRYPT_BTN_EL, 'Form__button--disabled')
-    Q.html(DECRYPT_BTN_EL, '')
-    Q.attr(DECRYPT_BTN_EL, 'disabled', 'disabled')
-    Q.append(DECRYPT_BTN_EL, SPINNER_EL)
+    Q.addClass(spinner_el, 'Spinner');
+    Q.addClass(decrypt_btn_el, 'Form__button--disabled');
+    Q.html(decrypt_btn_el, '');
+    Q.attr(decrypt_btn_el, 'disabled', 'disabled');
+    Q.append(decrypt_btn_el, spinner_el);
 
     // If this is the first time entering a PIN code, make the network request
     // so the server knows the destroy the payload.
     if (cached_encrypted_data === undefined) {
       request
-        .get('/api/secrets/' + TOKEN + '/' + FETCH_CODE)
+        .get('/api/secrets/' + token + '/' + fetch_code)
         .then(res => {
-          const RESPONSE = JSON.parse(res.text)
+          const response = JSON.parse(res.text);
 
-          cached_encrypted_data = atob(RESPONSE.payload)
+          cached_encrypted_data = atob(response.payload);
 
-          attemptDecryption(PASSWORD, cached_encrypted_data)
+          attemptDecryption(password, cached_encrypted_data);
         })
         .catch(err => {
-          showFailure()
-        })
+          showFailure();
+        });
     } else {
       // If attempting the PIN for a second/third/etc time, used the cached
       // network response as the server will no longer have the payload.
       try {
-        attemptDecryption(PASSWORD, cached_encrypted_data)
+        attemptDecryption(password, cached_encrypted_data);
       } catch (e) {
-        showFailure()
+        showFailure();
       }
     }
-  }
+  };
 
   /*
    |----------------------------------------------------------------------------
@@ -114,9 +120,9 @@ export default ({ Q, request }) => {
    |----------------------------------------------------------------------------
    | Manually starts the decryption process.
   */
-  Q.on(DECRYPT_BTN_EL, 'click', (e) => {
-    startDecrypt()
-  })
+  Q.on(decrypt_btn_el, 'click', e => {
+    startDecrypt();
+  });
 
   /*
    |----------------------------------------------------------------------------
@@ -125,11 +131,25 @@ export default ({ Q, request }) => {
    | If we have a pre-signed URL, automatically start the decryption process
    | given the base64 encoded password hash located in the URL.
   */
-  if (PASSWORD_PRE_SIGNED) {
-    const PASSWORD = URL_HASH.substring(1)
+  if (password_pre_signed) {
+    const password = url_hash.substring(1);
 
-    Q.val(PASSWORD_EL, atob(PASSWORD))
+    Q.val(password_el, atob(password));
 
-    startDecrypt()
+    startDecrypt();
   }
-}
+};
+
+/**
+ * Bootstrap this component.
+ */
+const bootstrap = function bootstrap() {
+  Q.documentReady(() => {
+    _decrypter();
+  });
+};
+
+/**
+ * Default export.
+ */
+export default bootstrap;
