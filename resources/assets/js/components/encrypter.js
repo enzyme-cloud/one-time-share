@@ -54,7 +54,7 @@ const _encrypter = function _encrypter() {
     const plain_data = Q.head(Q.val(plain_data_field));
     const password = getUniquePassword(18);
     const encrypted_data = sjcl.encrypt(password, plain_data, encryption_settings);
-    const fetch_code = btoa(sjcl.hash.sha256.hash(JSON.parse(encrypted_data).salt));
+    const fetch_code = btoa(getUniquePassword(32));
 
     Q.addClass(spinner, 'Spinner');
     Q.addClass(encrypt_data_btn, 'Form__button--disabled');
