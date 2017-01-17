@@ -19,8 +19,6 @@ class ViewController extends Controller
 
             // If they don't match, bail out.
             if ($secret->fetch_code !== $fetch_code) {
-                $secret->delete();
-
                 throw new Exception;
             }
 
