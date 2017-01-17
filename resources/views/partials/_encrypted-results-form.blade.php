@@ -5,7 +5,7 @@
                 <div class="Layout__column-quick">
                     <div class="Form">
                         <p class="util-label">Short url</p>
-                        <input id="js-encrypted-data-url-short" type="text" class="js-text-select Form__input">
+                        <input id="js-encrypted-data-url-short" type="text" class="js-text-select Form__input" readonly>
                     </div>
                 </div>
             </div>
@@ -13,7 +13,7 @@
                 <div class="Layout__column-quick">
                     <div class="Form">
                         <p class="util-label">Full url</p>
-                        <input id="js-encrypted-data-url" type="text" class="js-text-select Form__input">
+                        <input id="js-encrypted-data-url" type="text" class="js-text-select Form__input" readonly>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <div class="Layout__column-quick">
                     <div class="Form">
                         <p class="util-label">Password</p>
-                        <input id="js-encrypted-data-password" type="text" class="js-text-select Form__input">
+                        <input id="js-encrypted-data-password" type="text" class="js-text-select Form__input" readonly>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <div class="Layout__column-quick Layout__column--xs-12">
                         <div class="Form">
                             <p class="util-label">Pre-signed URL</p>
-                            <input id="js-pre-signed-url" type="text" class="js-text-select Form__input">
+                            <input id="js-pre-signed-url" type="text" class="js-text-select Form__input" readonly>
                         </div>
                     </div>
                     <div class="Layout__column-quick Layout__column--xs-12">
