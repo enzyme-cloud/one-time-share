@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Response;
 use Exception;
 use App\Secret;
+use App\Helpers\Log;
 use App\Helpers\Hashid;
 use Illuminate\Http\Request;
 use Mbarwick83\Shorty\Facades\Shorty;
 
 class SecretsController extends Controller
 {
-    public function store(Request $request, Hashid $hashid)
+    public function store(Request $request, Hashid $hashid, Log $log)
     {
         if (false === $request->has('payload')) {
             return Response::json([
@@ -30,10 +31,14 @@ class SecretsController extends Controller
         $secret->fetch_code = $request->get('fetch_code');
         $secret->save();
 
+        $token = $hashid->encode($secret->id);
+
         $url = route('view', [
-            'token'       => $hashid->encode($secret->id),
+            'token'       => $token,
             'fetch_code'  => $secret->fetch_code,
         ]);
+
+        $log->entry(['Secret', $token, 'has been created']);
 
         return Response::json([
             'url'   => $url,
@@ -41,7 +46,7 @@ class SecretsController extends Controller
         ]);
     }
 
-    public function view(Hashid $hashid, $uuid, $fetch_code)
+    public function view(Hashid $hashid, Log $log, $uuid, $fetch_code)
     {
         $payload = null;
 
@@ -58,10 +63,14 @@ class SecretsController extends Controller
 
         // Make sure the unlock code's match.
         if ($secret->fetch_code === $fetch_code) {
+            $log->entry(['The secret', $uuid, 'has been extracted']);
+
             return Response::json([
                 'payload' => $payload,
             ]);
         }
+
+        $log->entry(['Secret', $uuid, 'failed extraction']);
 
         return Response::json([
             'message' => 'Secret failed to unlock and has been destroyed.',

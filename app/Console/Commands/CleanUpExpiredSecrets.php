@@ -4,43 +4,30 @@ namespace App\Console\Commands;
 
 use App\Secret;
 use Carbon\Carbon;
+use App\Helpers\Log;
 use Illuminate\Console\Command;
 
 class CleanUpExpiredSecrets extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'ots:clean';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Cleans up the database by removing all expired secrets';
+    protected $log;
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(Log $log)
     {
         parent::__construct();
+
+        $this->log = $log;
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         $expired = Carbon::now()->subHours(12);
+        $secrets = Secret::where('created_at', '<=', $expired);
 
-        Secret::where('created_at', '<=', $expired)->delete();
+        if ($secrets->count() > 0) {
+            $this->log->entry(['Deleting', $secrets->count(), 'expired secrets']);
+            $secrets->delete();
+        }
     }
 }
