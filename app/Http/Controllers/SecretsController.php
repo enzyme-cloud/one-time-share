@@ -63,7 +63,7 @@ class SecretsController extends Controller
 
         // Make sure the unlock code's match.
         if ($secret->fetch_code === $fetch_code) {
-            $log->entry(['The secret', $uuid, 'has been extracted']);
+            $log->entry(['Secret', $uuid, 'has been extracted']);
 
             return Response::json([
                 'payload' => $payload,
