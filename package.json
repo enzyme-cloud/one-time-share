@@ -11,6 +11,7 @@
   "dependencies": {
     "laravel-elixir-browserify-official": "^0.1.3",
     "laravel-elixir-browsersync-official": "^1.0.0",
+    "laravel-elixir-sri": "^1.0.1",
     "qoob": "^4.3.1",
     "superagent": "^3.3.1",
     "zeus-grid": "^8.0.0"

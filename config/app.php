@@ -169,6 +169,7 @@ return [
 
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
         Mbarwick83\Shorty\ShortyServiceProvider::class,
+        Sebdesign\SRI\SubresourceIntegrityServiceProvider::class,
 
         /*
          * Application Service Providers...

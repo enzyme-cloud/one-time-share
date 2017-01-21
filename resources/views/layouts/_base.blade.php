@@ -8,7 +8,7 @@
     <title>OTS &#8212; Secure credential sharing.</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet">
-    <link rel="stylesheet" href="{{ elixir('css/main.css') }}">
+    <link rel="stylesheet" href="{{ elixir('css/main.css') }}" integrity="{{ integrity('css/main.css') }}" crossorigin="anonymous">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sjcl/1.0.6/sjcl.min.js"></script>
-    <script src="{{ elixir('js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sjcl/1.0.6/sjcl.min.js" integrity="sha384-uUk05Hm5S/G7X2TUGZj9GIX4zH0Z/Enc47TkjSCCJCoR0jOdAVlEWvstJgRdF/AG" crossorigin="anonymous"></script>
+    <script src="{{ elixir('js/main.js') }}" integrity="{{ integrity('js/main.js') }}" crossorigin="anonymous"></script>
 </body>
 </html>

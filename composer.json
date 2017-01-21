@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "hashids/hashids": "^2.0",
         "fideloper/proxy": "^3.2",
-        "mbarwick83/shorty": "^1.0"
+        "mbarwick83/shorty": "^1.0",
+        "sebdesign/laravel-sri": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
