@@ -27,7 +27,7 @@
             </div>
             <div class="Layout__row-quick Layout__column--text-center">
                 <div class="Layout__column-quick">
-                    <p>Use the password above to decrypt the data at the provided URL. The encrypted data will be automatically destroyed in 12 hours.</p>
+                    <p>Use the password above to decrypt the data at the provided URL. The encrypted data will be automatically destroyed in 48 hours.</p>
                 </div>
             </div>
             <div class="Layout__row-quick Layout__column--text-center">

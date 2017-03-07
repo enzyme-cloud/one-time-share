@@ -14,7 +14,7 @@
             <div class="Layout__column-quick Layout__column--md-6 Layout__column--md-offset-3">
                 <p><b>1. Encryption</b></p>
                 <p>OTS generates a unique password using <a href="https://developer.mozilla.org/en/docs/Web/API/RandomSource/getRandomValues">window.crypto.getRandomValues</a> which is used to encrypt the data locally in the browser using the <a href="https://github.com/bitwiseshiftleft/sjcl">SJCL</a> library. The encrypted payload is then base64 encoded and sent to the server, which responds with a unique URL tied to the payload.</p>
-                <p>This payload is now known as a "secret". All secrets will be automatically destroyed by the server 12 hours after their creation if they are not decrypted.</p>
+                <p>This payload is now known as a "secret". All secrets will be automatically destroyed by the server 48 hours after their creation if they are not decrypted.</p>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
         <div class="Layout__row-quick">
             <div class="Layout__column-quick Layout__column--md-6 Layout__column--md-offset-3">
                 <p><b>Synopsis</b></p>
-                <p>All encryption and decryption happens in the browser and the server will only ever get the encrypted payload. The payloads are known as secrets and can only be viewed once before they are destroyed. The system will also destroy any secrets 12 hours after they've been created if they have not been viewed.</p>
+                <p>All encryption and decryption happens in the browser and the server will only ever get the encrypted payload. The payloads are known as secrets and can only be viewed once before they are destroyed. The system will also destroy any secrets 48 hours after they've been created if they have not been viewed.</p>
             </div>
         </div>
 

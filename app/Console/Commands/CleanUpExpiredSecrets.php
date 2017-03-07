@@ -22,7 +22,7 @@ class CleanUpExpiredSecrets extends Command
 
     public function handle()
     {
-        $expired = Carbon::now()->subHours(12);
+        $expired = Carbon::now()->subHours(48);
         $secrets = Secret::where('created_at', '<=', $expired);
 
         if ($secrets->count() > 0) {
